@@ -1,0 +1,88 @@
+.tool-bar {
+    -fx-background-color: linear-gradient(to bottom, #d8a7ff, #9cc5ff); /* Градиент */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2); /* Тень */
+    -fx-border-width: 1px;
+    -fx-border-color: #89899f;
+}
+
+.pane {
+    -fx-background-color: linear-gradient(to bottom, #4facfe, #00f2fe); /* Градиентный фон */
+    -fx-border-color: #ffffff; /* Белая рамка */
+    -fx-border-width: 2px;
+}
+
+.flow-pane {
+    -fx-background-color: linear-gradient(to bottom, #d8a7ff, #9cc5ff);
+    -fx-border-color: #898989; /* Темно-серая рамка */
+    -fx-border-width: 1px;
+
+}
+
+.color-picker {
+    -fx-background-color: linear-gradient(to right, #ead5ff, #ead5ff);
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+.color-picker:hover {
+    -fx-background-color: linear-gradient(to right, #d6f6ff, #ead5ff);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 15, 0, 0, 5);
+}
+
+/* Дизайн отключенного ColorPicker */
+.color-picker:disabled {
+    -fx-background-color: #cccccc;
+    -fx-text-fill: #666666;
+    -fx-effect: none;
+    -fx-cursor: default;
+}
+
+/* Основной стиль для Spinner */
+.spinner {
+    -fx-background-color: linear-gradient(to right, #ead5ff, #ead5ff);
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+/* Стиль для кнопок увеличения/уменьшения в Spinner */
+.spinner .increment-button,
+.spinner .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+.spinner .increment-button:hover,
+.spinner .decrement-button:hover {
+    -fx-background-color: linear-gradient(to right, #d6f6ff, #ead5ff);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 15, 0, 0, 5);
+}
+
+/* Стиль для текстового поля в Spinner */
+.spinner .editor {
+    -fx-background-color: transparent;
+    -fx-text-fill: #000000;
+    -fx-font-size: 14px;
+    -fx-border-color: transparent;
+    -fx-padding: 0 10px;
+}
+
+/* Стиль для отключенного Spinner */
+.spinner:disabled {
+    -fx-background-color: #cccccc;
+    -fx-text-fill: #666666;
+    -fx-effect: none;
+    -fx-cursor: default;
+}
+
+.spinner:disabled .increment-button,
+.spinner:disabled .decrement-button {
+    -fx-background-color: #cccccc;
+    -fx-border-color: transparent;
+    -fx-cursor: default;
+}
+
+
