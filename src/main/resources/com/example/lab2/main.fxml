@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.input.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<VBox fx:id="root" fillWidth="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1000.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lab2.Controller">
+    <children>
+        <MenuBar prefHeight="25.0" prefWidth="1005.0">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="New">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Open...">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" text="Save">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Exit" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                    <items>
+                  <MenuItem mnemonicParsing="false" onAction="#handleClear" text="Clear" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="undoButton" mnemonicParsing="false" onAction="#handleUndo" text="Undo">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </MenuItem>
+                        <MenuItem fx:id="redoButton" mnemonicParsing="false" onAction="#handleRedo" text="Redo">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                            </accelerator>
+                        </MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Plugins...">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="P" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                            </accelerator>
+                        </MenuItem>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="135.0" prefWidth="1000.0" stylesheets="@styles.css">
+            <children>
+                <FlowPane hgap="5.0" minWidth="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="135.0" prefWidth="209.0" styleClass="flow-pane" vgap="5.0">
+                    <children>
+                        <ColorPicker fx:id="strokePicker" prefHeight="25.0" prefWidth="127.0" />
+                        <Label text="Контур    " />
+                        <ColorPicker fx:id="fillPicker" prefHeight="26.0" prefWidth="127.0" />
+                        <Label text="Заливка   " />
+                        <Spinner fx:id="strokeWidthSpinner" editable="true" minWidth="-Infinity" prefWidth="75.0">
+                            <valueFactory>
+                                <SpinnerValueFactory.DoubleSpinnerValueFactory amountToStepBy="0.5" initialValue="2.0" max="10.0" min="1.0" />
+                            </valueFactory>
+                        </Spinner>
+                        <Label text="Толщина контура   " />
+                        <Spinner fx:id="sidesAmountSpinner" prefHeight="27.0" prefWidth="75.0" visible="false">
+                            <valueFactory>
+                                <SpinnerValueFactory.IntegerSpinnerValueFactory amountToStepBy="1" initialValue="5" max="10" min="3" />
+                            </valueFactory>
+                        </Spinner>
+                        <Label fx:id="sidesLabel" text="Количество сторон" visible="false" />
+                    </children>
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                    <padding>
+                        <Insets left="10.0" right="10.0" top="7.0" />
+                    </padding>
+                </FlowPane>
+                <FlowPane alignment="CENTER_LEFT" hgap="30.0" minWidth="-Infinity" prefHeight="135.0" prefWidth="792.0" styleClass="flow-pane" vgap="5.0">
+                    <children>
+                        <Ellipse fx:id="buttonEllipse" fill="#1f93ff47" onMouseClicked="#onEllipseClick" radiusX="35.0" radiusY="35.0" stroke="BLACK" strokeType="INSIDE">
+                            <FlowPane.margin>
+                                <Insets left="7.0" top="15.0" />
+                            </FlowPane.margin>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Ellipse>
+                        <Rectangle fx:id="buttonRectangle" arcHeight="5.0" arcWidth="5.0" fill="#ff1f4152" height="70.0" onMouseClicked="#onRectangleClick" stroke="BLACK" strokeType="INSIDE" width="70.0">
+                            <FlowPane.margin>
+                                <Insets top="13.0" />
+                            </FlowPane.margin>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Rectangle>
+                        <Polygon fx:id="buttonPolygon" fill="#1fff2663" onMouseClicked="#onPolygonClick" stroke="BLACK" strokeType="INSIDE">
+                            <points>
+                                <Double fx:value="-35.0" />
+                                <Double fx:value="25.0" />
+                                <Double fx:value="35.0" />
+                                <Double fx:value="25.0" />
+                                <Double fx:value="0.0" />
+                                <Double fx:value="-45.0" />
+                            </points>
+                            <FlowPane.margin>
+                                <Insets top="12.0" />
+                            </FlowPane.margin>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Polygon>
+                        <Line fx:id="buttonLine" endX="50.0" onMouseClicked="#onLineClick" rotate="147.7" startX="-50.0" strokeWidth="3.0">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Line>
+                        <Polyline fx:id="buttonPolyline" fill="#80ff0000" onMouseClicked="#onPolylineClick" strokeType="INSIDE" strokeWidth="3.0">
+                            <points>
+                                <Double fx:value="-20.0" />
+                                <Double fx:value="-30.0" />
+                                <Double fx:value="30.0" />
+                                <Double fx:value="-20.0" />
+                                <Double fx:value="0.0" />
+                                <Double fx:value="60.0" />
+                                <Double fx:value="0.0" />
+                                <Double fx:value="20.0" />
+                            </points>
+                        </Polyline>
+                    </children>
+                    <padding>
+                        <Insets left="20.0" />
+                    </padding>
+                </FlowPane>
+            </children>
+        </HBox>
+        <Pane fx:id="drawPane" onMouseDragged="#onPaneMouseDragged" onMousePressed="#onPaneMousePressed" onMouseReleased="#onMouseReleased" prefHeight="500.0" prefWidth="1002.0" />
+    </children>
+</VBox>

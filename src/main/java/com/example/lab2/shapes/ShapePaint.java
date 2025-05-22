@@ -1,27 +1,43 @@
 package com.example.lab2.shapes;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Shape;
 
 public abstract class ShapePaint {
-    private Color color;
-    private double width;
+    protected Color strokeColor;
+    protected Color fillColor;
+    protected double strokeWidth;
 
-    public Color getColor() {
-        return color;
+    public abstract Shape createShape(double startX, double startY, double endX, double endY);
+
+    public void applyStyle(Shape shape) {
+        shape.setFill(fillColor);
+        shape.setStroke(strokeColor);
+        shape.setStrokeWidth(strokeWidth);
     }
 
-    public void setColor(Color color) {
-        this.color = color;
+    public Color getStrokeColor() {
+        return strokeColor;
     }
 
-    public double getWidth() {
-        return width;
+    public void setStrokeColor(Color color) {
+        this.strokeColor = color;
     }
 
-    public void setWidth(double width) {
-        this.width = width;
+    public Color getFillColor() {
+        return fillColor;
     }
 
-    public abstract void draw(GraphicsContext gc);
+    public void setFillColor(Color fillColor) {
+        this.fillColor = fillColor;
+    }
+
+    public double getStrokeWidth() {
+        return strokeWidth;
+    }
+
+    public void setStrokeWidth(double width) {
+        this.strokeWidth = width;
+    }
+
 }
