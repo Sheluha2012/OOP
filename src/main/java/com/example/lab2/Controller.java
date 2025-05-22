@@ -92,7 +92,6 @@ public class Controller {
         currShape = "Polygon";
         sidesLabel.setVisible(true);
         sidesAmountSpinner.setVisible(true);
-
     }
 
     @FXML
@@ -116,89 +115,114 @@ public class Controller {
         if (currShape == null) return;
         startX = event.getX();
         startY = event.getY();
+
         if ("Polyline".equals(currShape)) {
-            if (!drawingPolyline) {
-                polylineTool = new PolylinePaint();
-                polylineTool.setStrokeColor(strokePicker.getValue());
-                polylineTool.setFillColor(fillPicker.getValue());
-                polylineTool.setStrokeWidth(strokeWidthSpinner.getValue());
-                polylineTool.addPoint(event.getX(), event.getY());
-                previewShape = polylineTool.createShape(event.getX(), event.getY(), event.getX(), event.getY());
-                drawPane.getChildren().add(previewShape);
-
-                drawingPolyline = true;
-            } else {
-                polylineTool.addPoint(event.getX(), event.getY());
-                Line newLine = polylineTool.getLines().get(polylineTool.getLines().size() - 1);
-                drawPane.getChildren().add(newLine);
-                if (event.isSecondaryButtonDown()) {
-                    drawPane.getChildren().remove(previewShape);
-                    previewShape = null;
-
-                    Group polylineGroup = new Group();
-
-                    for (Line line : polylineTool.getLines()) {
-                        drawPane.getChildren().remove(line);
-                        polylineGroup.getChildren().add(line);
-                    }
-
-                    drawPane.getChildren().add(polylineGroup);
-                    shapeHistoryManager.addShape(polylineGroup, drawPane);
-
-                    polylineTool = null;
-                    drawingPolyline = false;
-                }
-
-            }
+            handlePolylineMousePressed(event);
             return;
         }
+
         currentShapeTool = ShapeFactory.create(currShape);
         currentShapeTool.setStrokeColor(strokePicker.getValue());
         currentShapeTool.setFillColor(fillPicker.getValue());
         currentShapeTool.setStrokeWidth(strokeWidthSpinner.getValue());
 
-        if (currentShapeTool instanceof PolygonPaint polygonPaint) {
-            Integer sides = sidesAmountSpinner.getValue();
-            if (sides != null) polygonPaint.setSides(sides);
+        if ("Polygon".equals(currShape)) {
+            configurePolygonTool();
         }
+
         previewShape = currentShapeTool.createShape(startX, startY, startX, startY);
         drawPane.getChildren().add(previewShape);
+    }
+
+    private void handlePolylineMousePressed(MouseEvent event) {
+        if (!drawingPolyline) {
+            polylineTool = new PolylinePaint();
+            polylineTool.setStrokeColor(strokePicker.getValue());
+            polylineTool.setFillColor(fillPicker.getValue());
+            polylineTool.setStrokeWidth(strokeWidthSpinner.getValue());
+            polylineTool.addPoint(event.getX(), event.getY());
+            previewShape = polylineTool.createShape(event.getX(), event.getY(), event.getX(), event.getY());
+            drawPane.getChildren().add(previewShape);
+            drawingPolyline = true;
+        } else {
+            polylineTool.addPoint(event.getX(), event.getY());
+            Line newLine = polylineTool.getLines().get(polylineTool.getLines().size() - 1);
+            drawPane.getChildren().add(newLine);
+
+            if (event.isSecondaryButtonDown()) {
+                finishPolylineDrawing();
+            }
+        }
+    }
+
+    private void finishPolylineDrawing() {
+        drawPane.getChildren().remove(previewShape);
+        previewShape = null;
+
+        Group polylineGroup = new Group();
+        for (Line line : polylineTool.getLines()) {
+            drawPane.getChildren().remove(line);
+            polylineGroup.getChildren().add(line);
+        }
+
+        drawPane.getChildren().add(polylineGroup);
+        shapeHistoryManager.addShape(polylineGroup, drawPane);
+
+        polylineTool = null;
+        drawingPolyline = false;
+    }
+
+    private void configurePolygonTool() {
+        Integer sides = sidesAmountSpinner.getValue();
+        if (sides != null) {
+            ((PolygonPaint) currentShapeTool).setSides(sides);
+        }
     }
 
     @FXML
     void onPaneMouseDragged(MouseEvent event) {
         if (!drawPane.contains(event.getX(), event.getY())) return;
+
         if ("Polyline".equals(currShape) && drawingPolyline) {
-            if (previewShape != null) {
-                drawPane.getChildren().remove(previewShape);
-            }
-            previewShape = polylineTool.createShape(
-                    polylineTool.getLastX(), polylineTool.getLastY(),
-                    event.getX(), event.getY()
-            );
-            drawPane.getChildren().add(previewShape);
+            handlePolylineMouseDragged(event);
             return;
         }
+
         if (currentShapeTool != null) {
-            if (currentShapeTool instanceof PolygonPaint polygonPaint) {
-                Integer sides = sidesAmountSpinner.getValue();
-                if (sides != null) polygonPaint.setSides(sides);
+            if ("Polygon".equals(currShape)) {
+                configurePolygonTool();
             }
-            if (previewShape != null) {
-                drawPane.getChildren().remove(previewShape);
-            }
-            previewShape = currentShapeTool.createShape(startX, startY, event.getX(), event.getY());
-            drawPane.getChildren().add(previewShape);
+
+            updatePreviewShape(event);
         }
+    }
+
+    private void handlePolylineMouseDragged(MouseEvent event) {
+        if (previewShape != null) {
+            drawPane.getChildren().remove(previewShape);
+        }
+        previewShape = polylineTool.createShape(
+                polylineTool.getLastX(), polylineTool.getLastY(),
+                event.getX(), event.getY()
+        );
+        drawPane.getChildren().add(previewShape);
+    }
+
+    private void updatePreviewShape(MouseEvent event) {
+        if (previewShape != null) {
+            drawPane.getChildren().remove(previewShape);
+        }
+        previewShape = currentShapeTool.createShape(startX, startY, event.getX(), event.getY());
+        drawPane.getChildren().add(previewShape);
     }
 
     @FXML
     void onMouseReleased(MouseEvent event) {
         if ("Polyline".equals(currShape)) return;
+
         if (currentShapeTool != null && previewShape != null) {
             drawPane.getChildren().remove(previewShape);
             Shape finalShape = currentShapeTool.createShape(startX, startY, event.getX(), event.getY());
-
             shapeHistoryManager.addShape(finalShape, drawPane);
             previewShape = null;
         }
@@ -212,12 +236,10 @@ public class Controller {
     @FXML
     void handleRedo() {
         shapeHistoryManager.redo(drawPane);
-
     }
 
     @FXML
     void handleClear() {
         shapeHistoryManager.clear(drawPane);
     }
-
 }

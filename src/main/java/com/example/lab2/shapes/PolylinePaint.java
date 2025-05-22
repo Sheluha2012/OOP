@@ -13,7 +13,6 @@ public class PolylinePaint extends ShapePaint {
 
     @Override
     public Shape createShape(double startX, double startY, double endX, double endY) {
-        // Для ломаной линии createShape используется только для preview
         Line previewLine = new Line(startX, startY, endX, endY);
         applyStyle(previewLine);
         return previewLine;
@@ -26,12 +25,9 @@ public class PolylinePaint extends ShapePaint {
             lastY = y;
             isFirstPoint = false;
         } else {
-            // Создаем новую линию от предыдущей точки к текущей
             Line newLine = new Line(lastX, lastY, x, y);
             applyStyle(newLine);
             lines.add(newLine);
-
-            // Обновляем последнюю точку
             lastX = x;
             lastY = y;
         }
