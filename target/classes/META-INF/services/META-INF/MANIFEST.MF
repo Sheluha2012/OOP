@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Main-Class: 
+Class-Path: jackson-databind-2.18.3.jar javafx-base-17.0.6-win.jar javaf
+ x-controls-17.0.6-win.jar javafx-fxml-17.0.6-win.jar javafx-controls-17
+ .0.6.jar javafx-graphics-17.0.6.jar javafx-fxml-17.0.6.jar jackson-anno
+ tations-2.18.3.jar jackson-core-2.18.3.jar javafx-graphics-17.0.6-win.j
+ ar javafx-base-17.0.6.jar
+

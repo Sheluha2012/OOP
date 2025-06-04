@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.input.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<Pane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="805.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo3.HelloApplication">
+ <MenuBar prefHeight="0.0" prefWidth="805.0">
+   <Menu mnemonicParsing="false" text="File">
+     <MenuItem fx:id="openMenuItem" mnemonicParsing="false" onAction="#loadShapesFromFile" text="Open...">
+            <accelerator>
+               <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+            </accelerator></MenuItem>
+     <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" onAction="#saveShapesToFile" text="Save...">
+            <accelerator>
+               <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+            </accelerator></MenuItem>
+   </Menu>
+      <Menu mnemonicParsing="false" text="Edit">
+        <items>
+        <MenuItem mnemonicParsing="false" onAction="#addPlugins" text="Plugins...">
+               <accelerator>
+                  <KeyCodeCombination alt="DOWN" code="P" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+               </accelerator></MenuItem>
+            <MenuItem fx:id="undoButton" mnemonicParsing="false" text="Undo">
+               <accelerator>
+                  <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+               </accelerator></MenuItem>
+            <MenuItem fx:id="redoButton" mnemonicParsing="false" text="Redo">
+               <accelerator>
+                  <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+               </accelerator></MenuItem>
+        </items>
+      </Menu>
+   <Menu mnemonicParsing="false" text="About" />
+ </MenuBar>
+  <ToolBar layoutY="24.0" prefHeight="132.0" prefWidth="805.0">
+      <FlowPane hgap="10.0" prefHeight="119.0" prefWidth="189.0" vgap="10.0">
+         <children>
+          <ColorPicker fx:id="fillColorPicker" prefHeight="34.0" prefWidth="148.0">
+            <value>
+              <Color />
+            </value>
+          </ColorPicker>
+          <ColorPicker fx:id="rootColorPicker" prefHeight="34.0" prefWidth="148.0">
+            <value>
+              <Color />
+            </value>
+          </ColorPicker>
+          <ScrollBar fx:id="depthScrollBar" max="50.0" min="1.0" prefHeight="14.0" prefWidth="147.0" />
+         </children>
+      </FlowPane>
+    <ChoiceBox fx:id="shapeChoiceBox" prefHeight="36.0" prefWidth="160.0" />
+  </ToolBar>
+  <Pane fx:id="drawingPane" layoutY="153.0" prefHeight="411.0" prefWidth="805.0" style="-fx-background-color: white;" />
+</Pane>
