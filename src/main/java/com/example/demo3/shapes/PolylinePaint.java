@@ -20,7 +20,7 @@ public class PolylinePaint extends ShapePaint {
 
     @Override
     public Shape draw() {
-        return null; // Polyline состоит из множества Line, поэтому возвращаем null
+        return null;
     }
 
     @Override
@@ -196,6 +196,7 @@ public class PolylinePaint extends ShapePaint {
         clearAll();
     }
 
+    @Override
     public boolean isFinalized() {
         return isFinalized;
     }

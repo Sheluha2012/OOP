@@ -26,12 +26,16 @@ public abstract class ShapePaint {
     public ShapePaint() {
     }
 
+    public boolean isFinalized() {
+        return true;
+    }
+
     public void setSelected(boolean selected) {
         if (this.javafxShape != null) {
             if (selected) {
                 this.javafxShape.setStrokeWidth(this.javafxShape.getStrokeWidth() * 2);
             } else {
-                this.javafxShape.setStrokeWidth(this.strokeWidth); // Восстанавливаем исходную толщину
+                this.javafxShape.setStrokeWidth(this.strokeWidth);
             }
         }
     }

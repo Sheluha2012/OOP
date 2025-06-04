@@ -15,18 +15,17 @@ public class ShapeHistoryManager {
 
     public void saveState(List<ShapePaint> shapes) {
         List<ShapePaint> filteredState = filterFinalizedShapes(shapes);
-
-        undoStack.push(new ArrayList<>(currentState));
-        currentState = new ArrayList<>(filteredState);
-        redoStack.clear();
+        if (!currentState.equals(filteredState)) {
+            undoStack.push(new ArrayList<>(currentState));
+            currentState = new ArrayList<>(filteredState);
+            redoStack.clear();
+        }
     }
     public void loadState(List<ShapePaint> shapes) {
         undoStack.push(new ArrayList<>(currentState));
         currentState = new ArrayList<>(filterFinalizedShapes(shapes));
         redoStack.clear();
     }
-
-
 
     public List<ShapePaint> undo() {
         if (canUndo()) {
@@ -63,7 +62,7 @@ public class ShapeHistoryManager {
     private List<ShapePaint> filterFinalizedShapes(List<ShapePaint> shapes) {
         List<ShapePaint> result = new ArrayList<>();
         for (ShapePaint shape : shapes) {
-            if (!(shape instanceof PolylinePaint) || ((PolylinePaint) shape).isFinalized()) {
+            if (shape.isFinalized()) {
                 result.add(shape);
             }
         }
